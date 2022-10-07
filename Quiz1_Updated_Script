@@ -1,0 +1,56 @@
+#!/bin/bash
+
+yes="y"
+no="n"
+
+
+echo "Please enter the name for the root DIR and the gomod identifier:"
+read "userDIR"
+read "IDMOD"
+
+if [[ "$userDIR" = "" || "$IDMOD" = "" ]]; then
+
+echo "You need to provide two arguments for this script to work."
+echo "Usage: make-go-dir <root directory name> <identifier name>"
+
+else
+
+mkdir "$userDIR"
+cd "$userDIR" && touch "$IDMOD"
+
+echo "I am about to create a directory structure name '$userDIR'."
+echo "Do you want me to proceed?(y/n)"
+
+read "userInput"
+
+
+if [[ "$userInput" != "$no" ]]; then
+
+mkdir "bin"
+mkdir "internals"
+mkdir "migrations"
+mkdir "remote"
+mkdir "go.mod"
+mkdir "Makefile"
+mkdir "cmd"
+cd "cmd"
+mkdir "api"
+cd "api"
+touch "main.go"
+
+echo "package main" >> "main.go"
+echo 'import "fmt"' >> "main.go"
+echo  "func main () { " >> "main.go"
+echo 'fmt.Println ("Hello world")' >> "main.go"
+echo "}" >> "main.go"
+
+echo "I have created a *main.go* file for you to test the directory structure."
+echo "Type *go run ./cmd/api* at the root directory of the project."
+
+else
+
+echo "aborted program"
+
+exit
+fi
+fi
